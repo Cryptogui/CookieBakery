@@ -2,9 +2,14 @@
 import java.util.*;
 
 public class Notes {
+	ArrayList<ArrayList<Integer>> notes = new ArrayList<>();
+	
 	public Notes(int frets){
-		Arraylist notes = new Arraylist ();
-		
-		
+		for(int i=0; i < 6; i++){
+			notes.add(new ArrayList<Integer>());
+			for(int k=0; k <= frets; k++){
+				notes.get(i).add(k);
+			}
+		}
 	}
 }
