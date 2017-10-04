@@ -1,12 +1,29 @@
 //used for showing visualizing tab
 public class Tab {
-	String[][] tab;
+	StringBuilder[] tab;
+	int currentPosition = 3;
 	public Tab(Fretboard fretboard){
-		
+		for(int i=0; i<fretboard.strings; i++){
+			for(int k=0; k<64; k++){
+				if(k==0 || k==63){
+					tab[i].append("|");
+				} else {
+					tab[i].append("-");
+				}
+			}
+		}
+	}
+	
+	//adds a note to the tab
+	public void addNoteToTab(int[] note){
+		tab[note[0]].setCharAt(currentPosition, (char)(note[1]));
+		currentPosition+=4;
 	}
 	
 	//print tab to console
 	public void print(){
-		
+		for(StringBuilder str: tab){
+			System.out.println(str);
+		}
 	}
 }
