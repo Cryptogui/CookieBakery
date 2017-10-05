@@ -3,12 +3,14 @@ public class Tab {
 	StringBuilder[] tab;
 	int currentPosition = 3;
 	public Tab(Fretboard fretboard){
+		tab = new StringBuilder[fretboard.strings];
 		for(int i=0; i<fretboard.strings; i++){
+			tab[i] = new StringBuilder();
 			for(int k=0; k<64; k++){
 				if(k==0 || k==63){
-					tab[i].append("|");
+					tab[i].append('|');
 				} else {
-					tab[i].append("-");
+					tab[i].append('-');
 				}
 			}
 		}
