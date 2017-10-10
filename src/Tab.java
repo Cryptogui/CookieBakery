@@ -18,14 +18,16 @@ public class Tab {
 	
 	//adds a note to the tab
 	public void addNoteToTab(int[] note){
-		tab[note[0]].setCharAt(currentPosition, (char)(note[1]));
+		tab[note[0]].deleteCharAt(currentPosition);
+		tab[note[0]].insert(currentPosition, note[1]);
+		//tab[note[0]].setCharAt(currentPosition, (char)(note[1]));
 		currentPosition+=4;
 	}
 	
 	//print tab to console
 	public void print(){
 		for(StringBuilder str: tab){
-			System.out.println(str);
+			System.out.println(str.toString());
 		}
 	}
 }
