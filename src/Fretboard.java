@@ -2,21 +2,12 @@
 import java.util.*;
 
 public class Fretboard {
-	//ArrayList<ArrayList<Integer>> notes = new ArrayList<>();
 	int [][] notes;
 	private Random rand = new Random();
 	int strings, frets;
 	
 	//define number of frets for program to handle in parameters
 	public Fretboard(int fretNum){
-		/*
-		for(int i=0; i < 6; i++){
-			notes.add(new ArrayList<Integer>());
-			for(int k=0; k <= frets; k++){
-				notes.get(i).add(k);
-			}
-		}
-		*/
 		frets = fretNum;
 		strings = 6;
 		this.notes = new int[strings][frets+1];
@@ -69,7 +60,7 @@ public class Fretboard {
 		int[] note = {string,fret};
 		return note;
 	}
-	
+	//random note between fret minimum and maximum on the selected string
 	public int[] getNote(int minimum, int maximum, int selectedString){
 		if(0<=selectedString && selectedString<= this.notes.length){
 			string = selectedString;

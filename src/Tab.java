@@ -1,7 +1,8 @@
-//used for showing visualizing tab
+//used for showing/visualizing tab
+//each Tab object is a complete musical idea
 public class Tab {
-	StringBuilder[] tab;
-	int currentPosition = 3;
+	StringBuilder[] tab;	//contains all notes in the tab
+	int currentPosition = 3;	//what location in the tab does the note have?
 	public Tab(Fretboard fretboard){
 		tab = new StringBuilder[fretboard.strings];
 		for(int i=0; i<fretboard.strings; i++){
