@@ -1,41 +1,41 @@
 //this is where the music is created
-public class Generator {
-	public enum Type{
-		ChordProgression,
-		Riff,
-		Solo
-	}
-	public enum Key{
-		A,Am,Bb,Bbm,B,Bm,C,Cm,Db,Dbm,D,Dm,Eb,Ebm,E,Em,F,Fm,Gb,Gbm,G,Gm,Ab,Abm
-	}
+public class Generator extends Modifiers{
 	
-	public Generator(Fretboard f, Tab t){
-		
+	public Generator(){
+		fretboard = new Fretboard(strings);
+		tab = new Tab(fretboard);
 	}
-	
+	//used for generating music of selected type
 	public void generate(Type a){
 		switch(a){
 			case ChordProgression:
 				createChords();
 				break;
 			case Riff:
-				createRiff();
+				createRiff(5);
 				break;
 			case Solo:
 				createSolo();
 				break;
 		}
 	}
-	
+	//for creating chord progressions
 	private void createChords(){
 		
 	}
-	
-	private void createRiff(){
+	//for creating riffs
+	private void createRiff(int n){
+		for(int i=0;i<n;i++){
+			tab.addNoteToTab(fretboard.getNote());
+		}
+	}
+	//for creating melodies over a chord progression
+	private void createSolo(){
 		
 	}
 	
-	private void createSolo(){
+	//check if number of notes in tab exceeds maximum capacity of a tab row, if so, create a new row
+	public void checkRows(){
 		
 	}
 }

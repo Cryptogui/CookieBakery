@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 
-public class RiffGen {
+public class RiffGen extends Modifiers {
+	
 	public static void main(String[]args){
-		Fretboard fretboard = new Fretboard(3);
-		Tab tab = new Tab(fretboard);
-		Generator gen = new Generator(fretboard,tab);
-		createTab(tab,fretboard,5);
-		tab.print();
+		Generator gen = new Generator();
+		gen.generate(Type.Riff);
+		gen.tab.print();
 	}
 	
-	public static void createTab(Tab t, Fretboard f, int n){
-		for(int i=0;i<n;i++){
-			t.addNoteToTab(f.getNote());
-		}
-	}
 }
+
+/*
+ * current plan:
+ * each tab has it's own generator object, 
+ * i.e. a new generator is to be created for every new tab
+ */
