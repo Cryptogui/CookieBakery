@@ -2,7 +2,7 @@
 public class Generator extends Modifiers{
 	
 	public Generator(){
-		fretboard = new Fretboard(strings);
+		fretboard = new Fretboard(strings, frets);
 		tab = new Tab(fretboard);
 	}
 	//used for generating music of selected type

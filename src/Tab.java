@@ -17,8 +17,8 @@ public class Tab {
 	
 	//adds a note to the tab
 	public void addNoteToTab(int[] note){
-		tab.get(currentRow).get(note[0]).deleteCharAt(currentPosition);	//deletes the char at the specified index
-		tab.get(currentRow).get(note[0]).insert(currentPosition, note[1]);	//inserts the new note at that same position
+		tab.get(currentRow-1).get(note[0]).deleteCharAt(currentPosition);	//deletes the char at the specified index
+		tab.get(currentRow-1).get(note[0]).insert(currentPosition, note[1]);	//inserts the new note at that same position
 		currentPosition+=4;	//moves the "marker" to the next position for the following note
 	}
 	
