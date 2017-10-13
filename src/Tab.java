@@ -17,7 +17,12 @@ public class Tab {
 	
 	//adds a note to the tab
 	public void addNoteToTab(int[] note){
-		tab.get(currentRow-1).get(note[0]).deleteCharAt(currentPosition);	//deletes the char at the specified index
+		if(note[1]>=10){
+			tab.get(currentRow-1).get(note[0]).deleteCharAt(currentPosition);	//deletes the char at the specified index
+			tab.get(currentRow-1).get(note[0]).deleteCharAt(currentPosition);	//does it again to compensate for note with two numbers
+		} else {
+			tab.get(currentRow-1).get(note[0]).deleteCharAt(currentPosition);	//deletes the char at the specified index
+		}
 		tab.get(currentRow-1).get(note[0]).insert(currentPosition, note[1]);	//inserts the new note at that same position
 		currentPosition+=4;	//moves the "marker" to the next position for the following note
 	}
@@ -25,6 +30,7 @@ public class Tab {
 	//print tab to console
 	public void print(){
 		for(int i=0; i<tab.size(); i++){	//for every tab row
+			System.out.println();	//print an empty line for visibility between tab rows
 			for(StringBuilder str: tab.get(i)){	//for every string on the tab row
 				System.out.println(str.toString());	//print the string
 			}
@@ -44,5 +50,6 @@ public class Tab {
 			}
 		}
 		currentRow+=1;
+		currentPosition = 3;
 	}
 }

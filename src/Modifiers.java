@@ -11,6 +11,7 @@ abstract class Modifiers {
 	//variables used for riff
 	static int strings;	//number of strings
 	static int frets;	//number of frets
+	static int desiredNotes;	//number of notes to be included in the riff
 	int[] lastNote;	//the latest note added to the tab
 	int riffLength;	//number of notes in riff, if this exceeds maximum capacity of a tab row, a new one should be created
 	//

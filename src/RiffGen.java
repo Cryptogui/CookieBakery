@@ -5,6 +5,7 @@ public class RiffGen extends Modifiers {
 	public static void main(String[]args){
 		strings = 6;
 		frets = 12;
+		desiredNotes = 31;
 		Generator gen = new Generator();
 		gen.generate(Type.Riff);
 		gen.tab.print();

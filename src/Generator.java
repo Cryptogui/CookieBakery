@@ -12,7 +12,7 @@ public class Generator extends Modifiers{
 				createChords();
 				break;
 			case Riff:
-				createRiff(5);
+				createRiff();
 				break;
 			case Solo:
 				createSolo();
@@ -24,9 +24,13 @@ public class Generator extends Modifiers{
 		
 	}
 	//for creating riffs
-	private void createRiff(int n){
-		for(int i=0;i<n;i++){
-			tab.addNoteToTab(fretboard.getNote());
+	private void createRiff(){
+		for(int i=0; i<desiredNotes; i++){
+			int[] newNote = fretboard.getNote();
+			tab.addNoteToTab(newNote);
+			lastNote = newNote;
+			currentNoteNumOnRow += 1;
+			checkRows();
 		}
 	}
 	//for creating melodies over a chord progression
@@ -35,7 +39,11 @@ public class Generator extends Modifiers{
 	}
 	
 	//check if number of notes in tab exceeds maximum capacity of a tab row, if so, create a new row
+	int currentNoteNumOnRow = 0;
 	public void checkRows(){
-		
+		if(currentNoteNumOnRow >= 15){
+			tab.createTabRow();
+			currentNoteNumOnRow = 0;
+		}
 	}
 }
