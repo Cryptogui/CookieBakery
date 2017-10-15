@@ -6,6 +6,9 @@ public class RiffGen extends Modifiers {
 		strings = 6;
 		frets = 12;
 		desiredNotes = 8;
+		maxFretJump =3;
+		maxStringJump = 2;
+		key = Key.Am;
 		Generator gen = new Generator();
 		gen.generate(Type.Riff);
 		gen.tab.print();

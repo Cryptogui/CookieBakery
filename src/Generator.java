@@ -2,7 +2,6 @@ import java.util.Random;
 
 //this is where the music is created
 public class Generator extends Modifiers{
-	private Random rand = new Random();
 	
 	public Generator(){
 		fretboard = new Fretboard(strings, frets);
@@ -28,8 +27,9 @@ public class Generator extends Modifiers{
 	}
 	//for creating riffs
 	private void createRiff(){
+		int[] newNote = {0,0};
 		for(int i=0; i<desiredNotes; i++){
-			int[] newNote = fretboard.getNote();
+			newNote = smartNote();
 			tab.addNoteToTab(newNote);
 			lastNote = newNote;
 			currentNoteNumOnRow += 1;
@@ -49,9 +49,18 @@ public class Generator extends Modifiers{
 			currentNoteNumOnRow = 0;	//reset for the next row
 		}
 	}
-	
-	private void smartNote(){
-		
+	//returns a note that fits the current specifications (key, max fret distance from last note)
+	private int[] smartNote(){
+		int[] newNote;
+		handleKeyNotes();
+		posNewNotes.clear();	//clears the list of possible new notes
+		for(int[] note: currentKeyNotes){	//for each note that belongs to the key
+			if(Math.abs(note[1]-lastNote[1])<=maxFretJump && Math.abs(note[0]-lastNote[0])<=maxStringJump){	//if the note is within the maximum fret and string change distance from the last note
+				posNewNotes.add(note);	//add the note to the list of possible new notes
+			}
+		}
+		newNote = posNewNotes.get(rand.nextInt(posNewNotes.size()));	//get a random note from the list of possible new notes
+		return newNote;
 	}
 	//returns true with prob % chance
 	private boolean probability(int prob){	//prob should be between 1 and 100
@@ -61,5 +70,16 @@ public class Generator extends Modifiers{
 			return false;
 		}
 	}
-	
+	//checks which key is the current one and adds its notes to the currentKeyNotes array
+	private void handleKeyNotes(){
+		if(key == Key.Am || key == Key.C){
+			currentKeyNotes = AmNotes;
+		} else if(key == Key.Em || key == Key.G){
+			currentKeyNotes = EmNotes;
+		} else if(key == Key.Bm || key == Key.D){
+			currentKeyNotes = BmNotes;
+		} else if(key == Key.Dm || key == Key.F){
+			currentKeyNotes = DmNotes;
+		}
+	}
 }
