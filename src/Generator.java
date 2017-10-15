@@ -1,5 +1,8 @@
+import java.util.Random;
+
 //this is where the music is created
 public class Generator extends Modifiers{
+	private Random rand = new Random();
 	
 	public Generator(){
 		fretboard = new Fretboard(strings, frets);
@@ -41,9 +44,22 @@ public class Generator extends Modifiers{
 	//check if number of notes in tab exceeds maximum capacity of a tab row, if so, create a new row
 	int currentNoteNumOnRow = 0;
 	public void checkRows(){
-		if(currentNoteNumOnRow >= 15){
+		if(currentNoteNumOnRow >= 15){	//maximum note capability on row is 15
 			tab.createTabRow();
-			currentNoteNumOnRow = 0;
+			currentNoteNumOnRow = 0;	//reset for the next row
 		}
 	}
+	
+	private void smartNote(){
+		
+	}
+	//returns true with prob % chance
+	private boolean probability(int prob){	//prob should be between 1 and 100
+		if(rand.nextInt(100)+1<=prob){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

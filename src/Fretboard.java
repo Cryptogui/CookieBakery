@@ -35,7 +35,7 @@ public class Fretboard {
 		string = rand.nextInt(notes.length);
 		min = 0;
 		max = this.notes[string].length;
-		int fret = rand.nextInt(max-min)+min;
+		int fret = rand.nextInt(max+1-min)+min;
 		int[] note = {string,fret};
 		return note;
 	}
@@ -56,7 +56,7 @@ public class Fretboard {
 		} else {
 			max = maximum;
 		}
-		int fret = rand.nextInt(max-min)+min;
+		int fret = rand.nextInt(max+1-min)+min;
 		int[] note = {string,fret};
 		return note;
 	}
@@ -81,7 +81,7 @@ public class Fretboard {
 		} else {
 			max = maximum;
 		}
-		int fret = rand.nextInt(max-min)+min;
+		int fret = rand.nextInt(max+1-min)+min;
 		int[] note = {string,fret};
 		return note;
 	}
