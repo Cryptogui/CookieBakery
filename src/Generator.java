@@ -59,6 +59,11 @@ public class Generator extends Modifiers{
 				posNewNotes.add(note);	//add the note to the list of possible new notes
 			}
 		}
+		for(int[] note: posNewNotes){	//this for loop takes removes the notes that are not within the specified fret boundaries
+			if(note[1]>frets){
+				posNewNotes.remove(posNewNotes.indexOf(note));
+			}
+		}
 		newNote = posNewNotes.get(rand.nextInt(posNewNotes.size()));	//get a random note from the list of possible new notes
 		return newNote;
 	}
