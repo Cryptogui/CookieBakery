@@ -27,9 +27,23 @@ public class Generator extends Modifiers{
 	}
 	//for creating riffs
 	private void createRiff(){
-		int[] newNote = {0,0};
+		int[] newNote;
 		for(int i=0; i<desiredNotes; i++){
-			newNote = smartNote();
+			if(probability(80)){
+				maxStringJump = 1;
+			} else if(probability(80+15) && maxDefStringJump>=2){
+				maxStringJump = 2;
+			} else{
+				maxStringJump = maxDefStringJump;
+			}
+			if(probability(95)){
+				newNote = smartNote();
+			} else{
+				int s = rand.nextInt((lastNote[0]+maxStringJump)-(lastNote[0]-maxStringJump))+(lastNote[0]-maxStringJump);
+				int fmin = lastNote[1] - maxFretJump;
+				int fmax = lastNote[1] + maxFretJump;
+				newNote = fretboard.getNote(fmin,fmax,s);
+			}
 			tab.addNoteToTab(newNote);
 			lastNote = newNote;
 			currentNoteNumOnRow += 1;
@@ -59,7 +73,7 @@ public class Generator extends Modifiers{
 				posNewNotes.add(note);	//add the note to the list of possible new notes
 			}
 		}
-		for(int[] note: posNewNotes){	//this for loop takes removes the notes that are not within the specified fret boundaries
+		for(int[] note: posNewNotes){	//this for loop removes the notes that are not within the specified fret boundaries
 			if(note[1]>frets){
 				posNewNotes.remove(posNewNotes.indexOf(note));
 			}

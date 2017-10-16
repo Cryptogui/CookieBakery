@@ -7,7 +7,7 @@ public class RiffGen extends Modifiers {
 		frets = 12;
 		desiredNotes = 8;
 		maxFretJump =3;
-		maxStringJump = 2;
+		maxDefStringJump = 3;
 		key = Key.Am;
 		Generator gen = new Generator();
 		gen.generate(Type.Riff);
