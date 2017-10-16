@@ -99,6 +99,10 @@ public class Generator extends Modifiers{
 			currentKeyNotes = BmNotes;
 		} else if(key == Key.Dm || key == Key.F){
 			currentKeyNotes = DmNotes;
+		} else if(key == Key.Bbm || key == Key.Db){
+			currentKeyNotes = BbmNotes;
+		} else if(key == Key.Cm || key == Key.Eb){
+			currentKeyNotes = CmNotes;
 		}
 	}
 }
