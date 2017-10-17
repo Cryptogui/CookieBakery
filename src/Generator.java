@@ -4,8 +4,13 @@ import java.util.Random;
 public class Generator extends Modifiers{
 	
 	public Generator(){
-		fretboard = new Fretboard(strings, frets);
-		tab = new Tab(fretboard);
+		tab = new Tab(strings);
+		notes = new int[strings][frets+1];
+		for(int i=0; i<notes.length; i++){
+			for(int k=0; k<notes[i].length; k++){
+				notes[i][k] = k;
+			}
+		}
 	}
 	//used for generating music of selected type
 	public void generate(Type a){
@@ -42,7 +47,7 @@ public class Generator extends Modifiers{
 				int s = rand.nextInt((lastNote[0]+maxStringJump)-(lastNote[0]-maxStringJump))+(lastNote[0]-maxStringJump);
 				int fmin = lastNote[1] - maxFretJump;
 				int fmax = lastNote[1] + maxFretJump;
-				newNote = fretboard.getNote(fmin,fmax,s);
+				newNote = getNote(fmin,fmax,s);
 			}
 			tab.addNoteToTab(newNote);
 			lastNote = newNote;
@@ -104,5 +109,62 @@ public class Generator extends Modifiers{
 		} else if(key == Key.Cm || key == Key.Eb){
 			currentKeyNotes = CmNotes;
 		}
+	}
+	
+	int min, max, string;
+	//random note, no specification
+	public int[] getNote(){
+		string = rand.nextInt(notes.length);
+		min = 0;
+		max = this.notes[string].length;
+		int fret = rand.nextInt(max+1-min)+min;
+		int[] note = {string,fret};
+		return note;
+	}
+	//random note between fret minimum and maximum, random string
+	public int[] getNote(int minimum, int maximum){
+		string = rand.nextInt(notes.length);
+		if(minimum<0){
+			min = 0;
+		} else if(minimum>this.notes[string].length) {
+			min = this.notes[string].length;
+		} else {
+			min = minimum;
+		}
+		if(maximum>this.notes[string].length){
+			max = this.notes[string].length;
+		} else if(maximum<min) {
+			max = min;
+		} else {
+			max = maximum;
+		}
+		int fret = rand.nextInt(max+1-min)+min;
+		int[] note = {string,fret};
+		return note;
+	}
+	//random note between fret minimum and maximum on the selected string
+	public int[] getNote(int minimum, int maximum, int selectedString){
+		if(0<=selectedString && selectedString<= this.notes.length){
+			string = selectedString;
+		} else {
+			string = rand.nextInt(notes.length);
+		}
+		if(minimum<0){
+			min = 0;
+		} else if(minimum>this.notes[string].length) {
+			min = this.notes[string].length;
+		} else {
+			min = minimum;
+		}
+		if(maximum>this.notes[string].length){
+			max = this.notes[string].length;
+		} else if(maximum<min) {
+			max = min;
+		} else {
+			max = maximum;
+		}
+		int fret = rand.nextInt(max+1-min)+min;
+		int[] note = {string,fret};
+		return note;
 	}
 }

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class Tab {
 	ArrayList<ArrayList<StringBuilder>> tab;	//contains all notes in the tab, tab[element representing a tab row][element representing string in the row]
-	Fretboard fretboard;
 	int currentPosition = 3;	//what location in the tab does the note have?
 	int currentRow = 0;	//what tab row number is currently being written on
+	int strings;
 	
-	public Tab(Fretboard f){
-		fretboard = f;
+	public Tab(int stringNum){
+		strings = stringNum;
 		tab = new ArrayList<ArrayList<StringBuilder>>();
 		createTabRow();
 	}
@@ -39,7 +39,7 @@ public class Tab {
 	
 	public void createTabRow(){
 		tab.add(new ArrayList<StringBuilder>());	//creates a new tab row
-		for(int i=0; i<fretboard.strings; i++){	//for each string on the fretboard
+		for(int i=0; i<strings; i++){	//for each string on the fretboard
 			tab.get(currentRow).add(new StringBuilder());	//add a new string on the tab
 			for(int k=0; k<64; k++){
 				if(k==0 || k==63){
