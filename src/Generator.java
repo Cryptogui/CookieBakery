@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 //this is where the music is created
@@ -98,7 +99,35 @@ public class Generator extends Modifiers{
 	}
 	//returns an array of notes, an arpeggio
 	private int[][] arpeggio(){
-		
+		int[][] arpeggio;
+		ArrayList <int[][]> arp = new ArrayList<>();	//notes in the new arpeggio
+		posNewNotes.clear();
+		int noteCount;	//how many notes in the arpeggio?
+		boolean goingUp=false,goingDown=false,arpCont = true;	//ascending,descending,does it continue?
+		if(probability(50)){	//ascending?
+			goingUp = true;
+			for(int[] note: currentKeyNotes){	//this for loop adds the notes higher than the starting note to the list of possible notes
+				if(note[0]<=lastNote[0] && lastNote[1]-Math.abs(lastNote[0]-note[0])*5<=note[1]){
+					posNewNotes.add(note);
+				}
+			}
+		} else{	//descending
+			goingDown = true;
+			for(int[] note: currentKeyNotes){	//this for loop adds the notes lower than the starting note to the list of possible notes
+				if(note[0]>=lastNote[0] && lastNote[1]+Math.abs(lastNote[0]-note[0])*5<=note[1]){
+					posNewNotes.add(note);
+				}
+			}
+		}
+		while(arpCont){
+			while(goingUp){
+				
+			}
+			while(goingDown){
+				
+			}
+		}
+		return arpeggio;
 	}
 	//returns true with prob % chance
 	private boolean probability(int prob){	//prob should be between 1 and 100
