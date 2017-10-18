@@ -34,25 +34,35 @@ public class Generator extends Modifiers{
 	private void createRiff(){
 		int[] newNote;
 		for(int i=0; i<desiredNotes; i++){
-			if(probability(80)){
-				maxStringJump = 1;
-			} else if(probability(80+15) && maxDefStringJump>=2){
-				maxStringJump = 2;
-			} else{
-				maxStringJump = maxDefStringJump;
+			if(probability(100)){	//single note
+				if(probability(80)){
+					maxStringJump = 1;
+				} else if(probability(80+15) && maxDefStringJump>=2){
+					maxStringJump = 2;
+				} else{
+					maxStringJump = maxDefStringJump;
+				}
+				if(probability(95)){
+					newNote = smartNote();
+				} else{
+					int s = rand.nextInt((lastNote[0]+maxStringJump)-(lastNote[0]-maxStringJump))+(lastNote[0]-maxStringJump);
+					int fmin = lastNote[1] - maxFretJump;
+					int fmax = lastNote[1] + maxFretJump;
+					newNote = getNote(fmin,fmax,s);
+				}
+				tab.addNoteToTab(newNote);
+				lastNote = newNote;
+				currentNoteNumOnRow += 1;
+				checkRows();
+			} else{	//arpeggio
+				int[][] newArpeggio = arpeggio();
+				for(int[] a: newArpeggio){
+					tab.addNoteToTab(a);
+					lastNote = a;
+					currentNoteNumOnRow += 1;
+					checkRows();
+				}
 			}
-			if(probability(95)){
-				newNote = smartNote();
-			} else{
-				int s = rand.nextInt((lastNote[0]+maxStringJump)-(lastNote[0]-maxStringJump))+(lastNote[0]-maxStringJump);
-				int fmin = lastNote[1] - maxFretJump;
-				int fmax = lastNote[1] + maxFretJump;
-				newNote = getNote(fmin,fmax,s);
-			}
-			tab.addNoteToTab(newNote);
-			lastNote = newNote;
-			currentNoteNumOnRow += 1;
-			checkRows();
 		}
 	}
 	//for creating melodies over a chord progression
@@ -85,6 +95,10 @@ public class Generator extends Modifiers{
 		}
 		newNote = posNewNotes.get(rand.nextInt(posNewNotes.size()));	//get a random note from the list of possible new notes
 		return newNote;
+	}
+	//returns an array of notes, an arpeggio
+	private int[][] arpeggio(){
+		
 	}
 	//returns true with prob % chance
 	private boolean probability(int prob){	//prob should be between 1 and 100

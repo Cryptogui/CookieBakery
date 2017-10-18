@@ -15,9 +15,3 @@ public class RiffGen extends Modifiers {
 	}
 	
 }
-
-/*
- * current plan:
- * each tab has it's own generator object, 
- * i.e. a new generator is to be created for every new tab
- */
