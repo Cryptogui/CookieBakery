@@ -56,13 +56,14 @@ public class Generator extends Modifiers{
 				currentNoteNumOnRow += 1;
 				checkRows();
 			} else{	//arpeggio
-				int[][] newArpeggio = arpeggio();
+				int[][] newArpeggio = arpeggio(i+1);	//"+1" since i starts with 0
 				for(int[] a: newArpeggio){
 					tab.addNoteToTab(a);
 					lastNote = a;
 					currentNoteNumOnRow += 1;
 					checkRows();
 				}
+				i+=newArpeggio.length;
 			}
 		}
 	}
@@ -98,35 +99,49 @@ public class Generator extends Modifiers{
 		return newNote;
 	}
 	//returns an array of notes, an arpeggio
-	private int[][] arpeggio(){
+	private int[][] arpeggio(int currentNoteNum){
 		int[][] arpeggio;
-		ArrayList <int[][]> arp = new ArrayList<>();	//notes in the new arpeggio
-		posNewNotes.clear();
-		int noteCount;	//how many notes in the arpeggio?
+		ArrayList<int[]> arp = new ArrayList<>();	//notes in the new arpeggio
+		ArrayList<int[]> posNextNotes = new ArrayList<>();	//used for determining the next note in the arpeggio
+		int maxNoteCount = desiredNotes-currentNoteNum;	//how many notes in the arpeggio?
 		boolean goingUp=false,goingDown=false,arpCont = true;	//ascending,descending,does it continue?
 		if(probability(50)){	//ascending?
 			goingUp = true;
-			for(int[] note: currentKeyNotes){	//this for loop adds the notes higher than the starting note to the list of possible notes
-				if(note[0]<=lastNote[0] && lastNote[1]-Math.abs(lastNote[0]-note[0])*5<=note[1]){
-					posNewNotes.add(note);
-				}
-			}
 		} else{	//descending
 			goingDown = true;
-			for(int[] note: currentKeyNotes){	//this for loop adds the notes lower than the starting note to the list of possible notes
-				if(note[0]>=lastNote[0] && lastNote[1]+Math.abs(lastNote[0]-note[0])*5<=note[1]){
-					posNewNotes.add(note);
-				}
-			}
 		}
 		while(arpCont){
 			while(goingUp){
-				
+				posNewNotes.clear();
+				for(int[] note: currentKeyNotes){	//this for loop adds the notes higher than the starting note to the list of possible notes
+					if(note[0]<=lastNote[0] && lastNote[1]-Math.abs(lastNote[0]-note[0])*5<=note[1]){
+						posNewNotes.add(note);
+					}
+				}
+				for(int[] note: posNewNotes){	//this for loop adds the possible notes in the closest vicinity of the last note to the list of possible next notes
+					if(Math.abs(lastNote[0]-note[0])<=1 && Math.abs(lastNote[1]-note[1])<=3){
+						posNextNotes.add(note);
+					}
+				}
 			}
 			while(goingDown){
-				
+				posNewNotes.clear();
+				for(int[] note: currentKeyNotes){	//this for loop adds the notes lower than the starting note to the list of possible notes
+					if(note[0]>=lastNote[0] && lastNote[1]+Math.abs(lastNote[0]-note[0])*5<=note[1]){
+						posNewNotes.add(note);
+					}
+				}
+				for(int[] note: posNewNotes){	//this for loop adds the possible notes in the closest vicinity of the last note to the list of possible next notes
+					if(Math.abs(lastNote[0]-note[0])<=1 && Math.abs(lastNote[1]-note[1])<=3){
+						posNextNotes.add(note);
+					}
+				}
+			}
+			if(!goingUp && !goingDown){	//if these are both false, then the arpeggio does not continue
+				arpCont = false;;
 			}
 		}
+		arpeggio = new int[arp.size()][2];
 		return arpeggio;
 	}
 	//returns true with prob % chance

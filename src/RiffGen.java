@@ -15,3 +15,11 @@ public class RiffGen extends Modifiers {
 	}
 	
 }
+/*to do:
+ * 
+ * tab writer
+ * 
+ * save/export
+ * 
+ * 
+ */
