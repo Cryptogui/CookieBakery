@@ -5,7 +5,7 @@ public class RiffGen extends Modifiers {
 	public static void main(String[]args){
 		strings = 6;
 		frets = 12;
-		desiredNotes = 8;
+		desiredNotes = 12;
 		maxFretJump =3;
 		maxDefStringJump = 3;
 		key = Key.Am;
