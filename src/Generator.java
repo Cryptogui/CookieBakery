@@ -35,7 +35,7 @@ public class Generator extends Modifiers{
 	private void createRiff(){
 		int[] newNote;
 		for(int i=0; i<desiredNotes; i++){
-			if(probability(100)){	//single note
+			if(probability(50)){	//single note
 				if(probability(80)){
 					maxStringJump = 1;
 				} else if(probability(80+15) && maxDefStringJump>=2){
@@ -100,18 +100,20 @@ public class Generator extends Modifiers{
 	}
 	//returns an array of notes, an arpeggio
 	private int[][] arpeggio(int currentNoteNum){
+		handleKeyNotes();
 		int[][] arpeggio;
 		ArrayList<int[]> arp = new ArrayList<>();	//notes in the new arpeggio
 		ArrayList<int[]> posNextNotes = new ArrayList<>();	//used for determining the next note in the arpeggio
-		int maxNoteCount = desiredNotes-currentNoteNum;	//how many notes in the arpeggio?
+		int noteCount = desiredNotes-currentNoteNum;	//max possible notes in the arpeggio
+		int shouldArpCont = 10;	//should the arpeggio continue?
 		boolean goingUp=false,goingDown=false,arpCont = true;	//ascending,descending,does it continue?
 		if(probability(50)){	//ascending?
 			goingUp = true;
 		} else{	//descending
 			goingDown = true;
 		}
-		while(arpCont){
-			while(goingUp){
+		while(arpCont && noteCount>=0){
+			while(goingUp && noteCount>=0){
 				posNewNotes.clear();
 				for(int[] note: currentKeyNotes){	//this for loop adds the notes higher than the starting note to the list of possible notes
 					if(note[0]<=lastNote[0] && lastNote[1]-Math.abs(lastNote[0]-note[0])*5<=note[1]){
@@ -119,12 +121,28 @@ public class Generator extends Modifiers{
 					}
 				}
 				for(int[] note: posNewNotes){	//this for loop adds the possible notes in the closest vicinity of the last note to the list of possible next notes
-					if(Math.abs(lastNote[0]-note[0])<=1 && Math.abs(lastNote[1]-note[1])<=3){
+					if(Math.abs(lastNote[0]-note[0])<=1 && Math.abs(lastNote[1]-note[1])<=2){
 						posNextNotes.add(note);
 					}
 				}
+				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));
+				arp.add(nextNote);
+				lastNote = nextNote;
+				noteCount-=1;
+				if(probability(shouldArpCont)){	//should the arpeggio stop going up?
+					if(probability(50)){
+						goingUp = false;
+						goingDown = true;
+					} else {	//should it stop completely?
+						goingUp = false;
+						arpCont = false;
+					}
+					shouldArpCont = 10;
+				} else {
+					shouldArpCont += 10;
+				}
 			}
-			while(goingDown){
+			while(goingDown && noteCount>=0){
 				posNewNotes.clear();
 				for(int[] note: currentKeyNotes){	//this for loop adds the notes lower than the starting note to the list of possible notes
 					if(note[0]>=lastNote[0] && lastNote[1]+Math.abs(lastNote[0]-note[0])*5<=note[1]){
@@ -136,9 +154,29 @@ public class Generator extends Modifiers{
 						posNextNotes.add(note);
 					}
 				}
+				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));
+				arp.add(nextNote);
+				lastNote = nextNote;
+				noteCount-=1;
+				if(probability(shouldArpCont)){	//should the arpeggio stop going down?
+					if(probability(50)){
+						goingDown = false;
+						goingUp = true;
+					} else {	//should it stop completely?
+						goingDown = false;
+						arpCont = false;
+					}
+					shouldArpCont = 10;
+				} else {
+					shouldArpCont += 10;
+				}
 			}
-			if(!goingUp && !goingDown){	//if these are both false, then the arpeggio does not continue
+			if(goingUp || goingDown){
+				continue;
+			} else if(!goingUp && !goingDown){	//if these are both false, then the arpeggio does not continue
 				arpCont = false;;
+			} else {
+				break;
 			}
 		}
 		arpeggio = new int[arp.size()][2];
