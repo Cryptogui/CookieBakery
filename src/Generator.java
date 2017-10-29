@@ -3,7 +3,7 @@ import java.util.Random;
 
 //this is where the music is created
 public class Generator extends Modifiers{
-	
+
 	public Generator(){
 		tab = new Tab(strings);
 		notes = new int[strings][frets+1];
@@ -29,13 +29,13 @@ public class Generator extends Modifiers{
 	}
 	//for creating chord progressions
 	private void createChords(){
-		
+
 	}
 	//for creating riffs
 	private void createRiff(){
 		int[] newNote;
 		for(int i=0; i<desiredNotes; i++){
-			if(probability(80)){	//single note
+			if(probability(10)){	//single note
 				if(probability(80)){
 					maxStringJump = 1;
 				} else if(probability(80+15) && maxDefStringJump>=2){
@@ -69,9 +69,9 @@ public class Generator extends Modifiers{
 	}
 	//for creating melodies over a chord progression
 	private void createSolo(){
-		
+
 	}
-	
+
 	//check if number of notes in tab exceeds maximum capacity of a tab row, if so, create a new row
 	int currentNoteNumOnRow = 0;
 	public void checkRows(){
@@ -211,7 +211,7 @@ public class Generator extends Modifiers{
 			currentKeyNotes = CmNotes;
 		}
 	}
-	
+
 	int min, max, string;
 	//random note, no specification
 	public int[] getNote(){

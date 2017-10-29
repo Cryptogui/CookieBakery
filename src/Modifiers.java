@@ -21,7 +21,7 @@ abstract class Modifiers {
 	static int maxStringJump;	//maximum string change between successive notes
 	static int maxDefStringJump;	//maximum defined string change between successive notes
 	static Key key;	//current key
-	int[] lastNote = {rand.nextInt(6),rand.nextInt(13)};	//the latest note added to the tab
+	int[] lastNote = {rand.nextInt(6),rand.nextInt(frets)};	//the latest note added to the tab
 	int riffLength;	//number of notes in riff, if this exceeds maximum capacity of a tab row, a new one should be created
 	//
 	Tab tab;
