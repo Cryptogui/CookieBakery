@@ -20,6 +20,12 @@ public class RiffGen extends Modifiers {
  * tab writer
  *
  * save/export
+ * 
+ * chord progressions
+ * 
+ * solo
  *
- *
+ *arpeggio går utanför frets
+ *error med långa tabs, något med random
+ *desirednotes inte samma som output alltid
  */

@@ -121,6 +121,11 @@ public class Generator extends Modifiers{
 						posNewNotes.add(note);
 					}
 				}
+				for(int i=(posNewNotes.size()-1); i>=0; i--){	//this for loop removes the notes that are not within the specified fret boundaries
+					if(posNewNotes.get(i)[1]>frets){
+						posNewNotes.remove(i);
+					}
+				}
 				for(int[] note: posNewNotes){	//this for loop adds the possible notes in the closest vicinity of the last note to the list of possible next notes
 					if(Math.abs(lastNote[0]-note[0])<=1 && Math.abs(lastNote[1]-note[1])<=2){
 						posNextNotes.add(note);
@@ -149,6 +154,11 @@ public class Generator extends Modifiers{
 				for(int[] note: currentKeyNotes){
 					if(note[0]>=lastNote[0] && lastNote[1]+Math.abs(lastNote[0]-note[0])*5<=note[1]){
 						posNewNotes.add(note);
+					}
+				}
+				for(int i=(posNewNotes.size()-1); i>=0; i--){	//this for loop removes the notes that are not within the specified fret boundaries
+					if(posNewNotes.get(i)[1]>frets){
+						posNewNotes.remove(i);
 					}
 				}
 				for(int[] note: posNewNotes){
