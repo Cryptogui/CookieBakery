@@ -9,8 +9,11 @@ public class RiffGen extends Modifiers {
 		maxFretJump =3;
 		maxDefStringJump = 3;
 		key = Key.Am;
+		time = 4/4;
+		//type = Type.Riff;
+		type = Type.ChordProgression;
 		Generator gen = new Generator();
-		gen.generate(Type.Riff);
+		gen.generate();
 		gen.tab.print();
 	}
 
@@ -19,13 +22,13 @@ public class RiffGen extends Modifiers {
  *
  * tab writer
  *
- * save/export
+ * save/export, probably i Tab class
  * 
  * chord progressions
  * 
  * solo
  *
- *arpeggio går utanför frets
- *error med långa tabs, något med random
+ *nytt random object för varje gång istället för samma rand?
+ *error med långa tabs, något med random (försvann efter att arpeggio inte utanför bounds?)
  *desirednotes inte samma som output alltid
  */

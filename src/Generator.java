@@ -5,7 +5,7 @@ import java.util.Random;
 public class Generator extends Modifiers{
 
 	public Generator(){
-		tab = new Tab(strings);
+		tab = new Tab(strings, type, time);
 		notes = new int[strings][frets+1];
 		for(int i=0; i<notes.length; i++){
 			for(int k=0; k<notes[i].length; k++){
@@ -14,8 +14,8 @@ public class Generator extends Modifiers{
 		}
 	}
 	//used for generating music of selected type
-	public void generate(Type a){
-		switch(a){
+	public void generate(){
+		switch(type){
 			case ChordProgression:
 				createChords();
 				break;
@@ -29,7 +29,7 @@ public class Generator extends Modifiers{
 	}
 	//for creating chord progressions
 	private void createChords(){
-
+		
 	}
 	//for creating riffs
 	private void createRiff(){
