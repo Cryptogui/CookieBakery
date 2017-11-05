@@ -209,17 +209,27 @@ public class Generator extends Modifiers{
 	private void handleKeyNotes(){
 		if(key == Key.Am || key == Key.C){
 			currentKeyNotes = AmNotes;
+			chordKey = "C";
 		} else if(key == Key.Em || key == Key.G){
 			currentKeyNotes = EmNotes;
+			chordKey = "G";
 		} else if(key == Key.Bm || key == Key.D){
 			currentKeyNotes = BmNotes;
+			chordKey = "D";
 		} else if(key == Key.Dm || key == Key.F){
 			currentKeyNotes = DmNotes;
+			chordKey = "F";
 		} else if(key == Key.Bbm || key == Key.Db){
 			currentKeyNotes = BbmNotes;
+			chordKey = "Db";
 		} else if(key == Key.Cm || key == Key.Eb){
 			currentKeyNotes = CmNotes;
+			chordKey = "Eb";
 		}
+	}
+	//determines the root notes to be used in the chord progression
+	public void handleKeyChords(){
+		
 	}
 
 	int min, max, string;
