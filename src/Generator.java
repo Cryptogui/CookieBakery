@@ -29,7 +29,10 @@ public class Generator extends Modifiers{
 	}
 	//for creating chord progressions
 	private void createChords(){
-		
+		String newChord;
+		for(int i=0; i<desiredChords; i++){
+			newChord = rootNotes.get(rand.nextInt(rootNotes.size()));
+		}
 	}
 	//for creating riffs
 	private void createRiff(){
@@ -229,7 +232,18 @@ public class Generator extends Modifiers{
 	}
 	//determines the root notes to be used in the chord progression
 	public void handleKeyChords(){
-		
+		int[] steps = {2,2,1,2,2,2};	//major scale
+		int stepCounter = 0;
+		int root = tonics.indexOf(chordKey);
+		rootNotes.add(tonics.get(root));	//do (I)
+		for(int nextStep: steps){	//re(II), mi(III), fa(IV), sol(V), la(VI), ti(VII)
+			if(root+stepCounter+nextStep>=tonics.size()){
+				rootNotes.add(tonics.get(root+stepCounter+nextStep-12));
+			} else {
+				rootNotes.add(tonics.get(root+stepCounter+nextStep));
+			}
+			stepCounter += nextStep;
+		}
 	}
 
 	int min, max, string;
