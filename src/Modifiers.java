@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 //for stuff to not get in the way
@@ -44,9 +45,11 @@ abstract class Modifiers {
 	String[] chordTypesFullMinor = {"m","m7","m7b5","m/aug","5","m/maj7","sus4","sus2","7sus4","7sus2","m/add2","m/add4","m6","m9","m/maj9","m11","m/maj11","m13","m/maj13","m7#9","m7b9","m7#5"};
 	String[] chordTypesSimpleMajor = {"","7","maj7","5","sus4","sus2"};
 	String[] chordTypesSimpleMinor = {"m","m7","5","sus4","sus2"};
+	String[] chordTypesBasicMajor = {"","7","maj7","5"};
+	String[] chordTypesBasicMinor = {"m","m7","5"};
 	ArrayList <String> tonics = new ArrayList <String>(Arrays.asList("A","A#","B","C","C#","D","D#","E","F","F#","G","G#"));	//the root of the chord, pick one from these and type from the above
 	String chordKey;
 	ArrayList <String> rootNotes = new ArrayList<>();	//the possible root notes for the chords in the progression, i.e. do, re, mi...
-	
+	HashMap<String, String> minOrMaj = new HashMap<String, String>();
 	
 }

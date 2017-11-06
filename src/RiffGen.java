@@ -10,6 +10,7 @@ public class RiffGen extends Modifiers {
 		maxDefStringJump = 3;
 		key = Key.Am;
 		time = 4/4;
+		desiredChords = 12;
 		//type = Type.Riff;
 		type = Type.ChordProgression;
 		Generator gen = new Generator();
@@ -27,6 +28,8 @@ public class RiffGen extends Modifiers {
  * chord progressions
  * 
  * solo
+ * 
+ * använda try, catch för ny tab/chord row istället för en counter?
  *
  *nytt random object för varje gång istället för samma rand?
  *error med långa tabs, något med random (försvann efter att arpeggio inte utanför bounds?)

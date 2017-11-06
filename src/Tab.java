@@ -46,10 +46,14 @@ public class Tab {
 	//adds a chord to the progression
 	public void addChord(String chord){
 		for(int i=0; i<chord.length(); i++){
-			chords.get(currentRow-1).deleteCharAt(currentPosition);	//deletes the char at the specified index
+			try{	//this try/catch block handles the event that there is no space left for new chords on the chord row, in which case a new chord row is created
+				chords.get(currentRow-1).deleteCharAt(currentPosition);	//deletes the char at the specified index
+			} catch(StringIndexOutOfBoundsException e){
+				createChordRow();
+			}
 		}
 		chords.get(currentRow-1).insert(currentPosition, chord);	//inserts the chord at that same position
-		currentPosition+=4;	//moves the "marker" to the next position for the following chord
+		currentPosition+=16;	//moves the "marker" to the next position for the following chord
 	}
 	
 	//print tab to console
@@ -101,8 +105,9 @@ public class Tab {
 		currentRow+=1;
 		currentPosition = 3;
 		if(time == 4/4){
-			chords.get(currentRow-1).deleteCharAt(chords.get(currentRow-1).length()/2);
-			chords.get(currentRow-1).insert(chords.get(currentRow-1).length()/2, '|');
+			int halfwayIndex = chords.get(currentRow-1).length()/2;
+			chords.get(currentRow-1).deleteCharAt(halfwayIndex);
+			chords.get(currentRow-1).insert(halfwayIndex, '|');
 		} else if(time == 3/4){
 			
 		} else if(time == 7/8){
