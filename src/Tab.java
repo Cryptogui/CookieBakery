@@ -10,11 +10,9 @@ public class Tab {
 	int currentRow = 0;	//what tab row number is currently being written on
 	int strings;
 	Modifiers.Type type;
-	int time;
 	
-	public Tab(int stringNum, Modifiers.Type t, int timeSignature){
+	public Tab(int stringNum, Modifiers.Type t){
 		type = t;
-		time = timeSignature;
 		strings = stringNum;
 		tab = new ArrayList<ArrayList<StringBuilder>>();
 		chords = new ArrayList<StringBuilder>();
@@ -102,16 +100,10 @@ public class Tab {
 				chords.get(currentRow).append(' ');
 			}
 		}
+		int halfwayIndex = chords.get(currentRow).length()/2;
+		chords.get(currentRow).deleteCharAt(halfwayIndex);
+		chords.get(currentRow).insert(halfwayIndex, '|');
 		currentRow+=1;
 		currentPosition = 3;
-		if(time == 4/4){
-			int halfwayIndex = chords.get(currentRow-1).length()/2;
-			chords.get(currentRow-1).deleteCharAt(halfwayIndex);
-			chords.get(currentRow-1).insert(halfwayIndex, '|');
-		} else if(time == 3/4){
-			
-		} else if(time == 7/8){
-			
-		}
 	}
 }

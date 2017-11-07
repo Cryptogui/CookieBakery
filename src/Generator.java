@@ -5,7 +5,7 @@ import java.util.Random;
 public class Generator extends Modifiers{
 
 	public Generator(){
-		tab = new Tab(strings, type, time);
+		tab = new Tab(strings, type);
 		notes = new int[strings][frets+1];
 		for(int i=0; i<notes.length; i++){
 			for(int k=0; k<notes[i].length; k++){
