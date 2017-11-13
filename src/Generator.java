@@ -148,7 +148,7 @@ public class Generator extends Modifiers{
 				arp.add(nextNote);	//adds the new note to the arpeggio
 				lastNote = nextNote;	//to be able to determine the following note
 				noteCount-=1;	//the arpeggio can't go on forever :(
-				if(probability(shouldArpCont)){	//should the arpeggio stop going up?
+				if(probability(shouldArpCont) || equalNotes(3,arp)){	//should the arpeggio stop going up? (also triggers if there are too many of the same note after each other, i.e. it has reached the top string highest fret)
 					if(probability(50)){	//yes, but it continues down instead
 						goingUp = false;
 						goingDown = true;
@@ -183,7 +183,7 @@ public class Generator extends Modifiers{
 				arp.add(nextNote);
 				lastNote = nextNote;
 				noteCount-=1;
-				if(probability(shouldArpCont)){	//should the arpeggio stop going down?
+				if(probability(shouldArpCont) || equalNotes(3,arp)){	//should the arpeggio stop going down? (also triggers if there are too many of the same note after each other, i.e. it has reached the bottom string lowest fret)
 					if(probability(50)){
 						goingDown = false;
 						goingUp = true;
@@ -217,6 +217,20 @@ public class Generator extends Modifiers{
 		} else {
 			return false;
 		}
+	}
+	//checks if there are too many identical successive notes, if so, returns true
+	public boolean equalNotes(int checkValue, ArrayList list){
+		int i=0;
+		while(i<=checkValue){
+			try{
+				if(list.get(list.size()) != list.get(list.size()-i)){
+					return false;	//the notes are not identical
+				}
+			} catch(IndexOutOfBoundsException e){
+				return false;	//not enough notes to determine if there are too many successive identical notes
+			}
+		}
+		return true;	//the notes are identical
 	}
 	//checks which key is the current one and adds its notes to the currentKeyNotes array
 	private void handleKeyNotes(){
