@@ -1,8 +1,9 @@
-
+import java.util.Scanner;
 
 public class RiffGen extends Modifiers {
 
 	public static void main(String[]args){
+		Scanner scan = new Scanner(System.in);
 		strings = 6;
 		frets = 12;
 		desiredNotes = 30;
@@ -13,8 +14,30 @@ public class RiffGen extends Modifiers {
 		type = Type.Riff;
 		//type = Type.ChordProgression;
 		Generator gen = new Generator();
-		gen.generate();
-		gen.tab.print();
+		//gen.generate();
+		//gen.tab.print();
+		
+		while(true){
+			System.out.print("command: \n");
+			String input = scan.nextLine();
+			if("gen".equals(input)){
+				gen = new Generator();
+				gen.generate();
+			} else if("print".equals(input)){
+				gen.tab.print();
+			} else if("riff".equals(input)){
+				type = Type.Riff;
+			} else if("chords".equals(input)){
+				type = Type.ChordProgression;
+			} else if("all notes".equals(input)){
+				for(int[] i: allNotes){
+					System.out.print("("+i[0]+","+i[1]+")"+" , ");
+				}
+				System.out.println();
+			} else if("exit".equals(input)){
+				break;
+			}
+		}
 	}
 
 }

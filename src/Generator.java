@@ -109,6 +109,7 @@ public class Generator extends Modifiers{
 			}
 		}
 		newNote = posNewNotes.get(rand.nextInt(posNewNotes.size()));	//get a random note from the list of possible new notes
+		allNotes.add(newNote);
 		return newNote;
 	}
 	//returns an array of notes, an arpeggio
@@ -146,9 +147,10 @@ public class Generator extends Modifiers{
 				}
 				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));	//takes a random note from the list of possible next notes
 				arp.add(nextNote);	//adds the new note to the arpeggio
+				allNotes.add(nextNote);
 				lastNote = nextNote;	//to be able to determine the following note
 				noteCount-=1;	//the arpeggio can't go on forever :(
-				if(probability(shouldArpCont) || equalNotes(3,arp)){	//should the arpeggio stop going up? (also triggers if there are too many of the same note after each other, i.e. it has reached the top string highest fret)
+				if(probability(shouldArpCont) || equalNotes(3)){	//should the arpeggio stop going up? (also triggers if there are too many of the same note after each other, i.e. it has reached the top string highest fret)
 					if(probability(50)){	//yes, but it continues down instead
 						goingUp = false;
 						goingDown = true;
@@ -181,9 +183,10 @@ public class Generator extends Modifiers{
 				}
 				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));
 				arp.add(nextNote);
+				allNotes.add(nextNote);
 				lastNote = nextNote;
 				noteCount-=1;
-				if(probability(shouldArpCont) || equalNotes(3,arp)){	//should the arpeggio stop going down? (also triggers if there are too many of the same note after each other, i.e. it has reached the bottom string lowest fret)
+				if(probability(shouldArpCont) || equalNotes(3)){	//should the arpeggio stop going down? (also triggers if there are too many of the same note after each other, i.e. it has reached the bottom string lowest fret)
 					if(probability(50)){
 						goingDown = false;
 						goingUp = true;
@@ -218,19 +221,27 @@ public class Generator extends Modifiers{
 			return false;
 		}
 	}
+	int equalNoteCooldown = 0;	//used to prevent equalNotes() from entering loop once it returns true
 	//checks if there are too many identical successive notes, if so, returns true
-	public boolean equalNotes(int checkValue, ArrayList list){
+	public boolean equalNotes(int checkValue){
 		int i=0;
-		while(i<=checkValue){
-			try{
-				if(list.get(list.size()) != list.get(list.size()-i)){
-					return false;	//the notes are not identical
+		if(equalNoteCooldown>0){
+			equalNoteCooldown--;
+			return false;
+		} else {
+			while(i<=checkValue){
+				try{
+					if(allNotes.get(allNotes.size()-1) != allNotes.get(allNotes.size()-1-i)){
+						return false;	//the notes are not identical
+					}
+				} catch(IndexOutOfBoundsException e){
+					return false;	//not enough notes to determine if there are too many successive identical notes
 				}
-			} catch(IndexOutOfBoundsException e){
-				return false;	//not enough notes to determine if there are too many successive identical notes
+				i++;
 			}
+			equalNoteCooldown = 4;
+			return true;	//the notes are identical
 		}
-		return true;	//the notes are identical
 	}
 	//checks which key is the current one and adds its notes to the currentKeyNotes array
 	private void handleKeyNotes(){
