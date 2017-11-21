@@ -6,9 +6,9 @@ public class RiffGen extends Modifiers {
 		Scanner scan = new Scanner(System.in);
 		strings = 6;
 		frets = 12;
-		desiredNotes = 16;
+		desiredNotes = 15;
 		maxFretJump =3;
-		maxDefStringJump = 3;
+		maxDefStringJump = 2;
 		key = Key.Am;
 		desiredChords = 8;
 		type = Type.Riff;
@@ -17,6 +17,7 @@ public class RiffGen extends Modifiers {
 		//gen.generate();
 		//gen.tab.print();
 		
+		//user interface
 		while(true){
 			System.out.print("command: \n");
 			String input = scan.nextLine();
@@ -57,6 +58,4 @@ public class RiffGen extends Modifiers {
  * använda try, catch för ny tab/chord row istället för en counter?		(fixat för chord row nu)
  *
  *nytt random object för varje gång istället för samma rand?
- *error med långa tabs, något med random (försvann efter att arpeggio inte utanför bounds?)
- *desirednotes inte samma som output alltid		(troligtvis i arpeggio något?)
  */

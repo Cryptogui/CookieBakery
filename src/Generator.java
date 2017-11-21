@@ -49,7 +49,7 @@ public class Generator extends Modifiers{
 		allNotes.clear();
 		int[] newNote;
 		for(int i=1; i<=desiredNotes; i++){
-			if(probability(10)){	//single note
+			if(probability(80)){	//single note
 				if(probability(80)){
 					maxStringJump = 1;
 				} else if(probability(80+15) && maxDefStringJump>=2){
@@ -238,6 +238,7 @@ public class Generator extends Modifiers{
 				}
 				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
 					newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
+					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
 				}
 			} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] <= allNotes.get(allNotes.size()-1)[0]){	//lower fret, higher string
 				if(note[0]+1 == 2){	//is it the g string?
@@ -247,6 +248,7 @@ public class Generator extends Modifiers{
 				}
 				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
 					newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
+					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
 				}
 			} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0] && note[0] != 5){	//lower fret, lower string
 				if(note[0]+1 == 2){	//is it the g string?
@@ -256,6 +258,7 @@ public class Generator extends Modifiers{
 				}
 				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
 					newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
+					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
 				}
 			} else if(note[1] >= allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0]){	//higher fret, lower string
 				if(note[0] == 2){	//is it the g string?
@@ -265,6 +268,7 @@ public class Generator extends Modifiers{
 				}
 				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
 					newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
+					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
 				}
 			}
 		} catch(ArrayIndexOutOfBoundsException e){

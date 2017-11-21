@@ -7,6 +7,7 @@ public class Tab {
 	ArrayList<ArrayList<StringBuilder>> tab;	//contains all notes in the tab, tab[element representing a tab row][element representing string in the row]
 	ArrayList<StringBuilder> chords;	//like tab, but for chords, chords[tab row][element representing string in the row]
 	int currentPosition = 3;	//what location in the tab does the note have?
+	int currentChordPosition = 3;	//what location in the tab does the chord have?
 	int currentRow = 0;	//what tab row number is currently being written on
 	int strings;
 	Modifiers.Type type;
@@ -45,13 +46,13 @@ public class Tab {
 	public void addChord(String chord){
 		for(int i=0; i<chord.length(); i++){
 			try{	//this try/catch block handles the event that there is no space left for new chords on the chord row, in which case a new chord row is created
-				chords.get(currentRow-1).deleteCharAt(currentPosition);	//deletes the char at the specified index
+				chords.get(currentRow-1).deleteCharAt(currentChordPosition);	//deletes the char at the specified index
 			} catch(StringIndexOutOfBoundsException e){
 				createChordRow();
 			}
 		}
-		chords.get(currentRow-1).insert(currentPosition, chord);	//inserts the chord at that same position
-		currentPosition+=16;	//moves the "marker" to the next position for the following chord
+		chords.get(currentRow-1).insert(currentChordPosition, chord);	//inserts the chord at that same position
+		currentChordPosition+=16;	//moves the "marker" to the next position for the following chord
 	}
 	
 	//print tab to console
@@ -104,6 +105,6 @@ public class Tab {
 		chords.get(currentRow).deleteCharAt(halfwayIndex);
 		chords.get(currentRow).insert(halfwayIndex, '|');
 		currentRow+=1;
-		currentPosition = 3;
+		currentChordPosition = 3;
 	}
 }
