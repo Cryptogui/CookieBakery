@@ -231,7 +231,7 @@ public class Generator extends Modifiers{
 		} else {
 			while(i<=checkValue){
 				try{
-					if(allNotes.get(allNotes.size()-1) != allNotes.get(allNotes.size()-1-i)){
+					if(allNotes.get(allNotes.size()-1)[0] != allNotes.get(allNotes.size()-1-i)[0] && allNotes.get(allNotes.size()-1)[1] != allNotes.get(allNotes.size()-1-i)[1]){
 						return false;	//the notes are not identical
 					}
 				} catch(IndexOutOfBoundsException e){

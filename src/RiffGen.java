@@ -38,6 +38,7 @@ public class RiffGen extends Modifiers {
 				break;
 			}
 		}
+		scan.close();
 	}
 
 }
