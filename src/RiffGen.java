@@ -6,7 +6,7 @@ public class RiffGen extends Modifiers {
 		Scanner scan = new Scanner(System.in);
 		strings = 6;
 		frets = 12;
-		desiredNotes = 30;
+		desiredNotes = 16;
 		maxFretJump =3;
 		maxDefStringJump = 3;
 		key = Key.Am;
@@ -20,21 +20,21 @@ public class RiffGen extends Modifiers {
 		while(true){
 			System.out.print("command: \n");
 			String input = scan.nextLine();
-			if("gen".equals(input)){
+			if("gen".equals(input)){	//generate a new tab
 				gen = new Generator();
 				gen.generate();
-			} else if("print".equals(input)){
+			} else if("print".equals(input)){	//print the current tab
 				gen.tab.print();
-			} else if("riff".equals(input)){
+			} else if("riff".equals(input)){	//type selected for generation is riff
 				type = Type.Riff;
-			} else if("chords".equals(input)){
+			} else if("chords".equals(input)){	//type selected for generation is chord progression
 				type = Type.ChordProgression;
-			} else if("all notes".equals(input)){
+			} else if("all notes".equals(input)){	//all notes in the riff
 				for(int[] i: allNotes){
 					System.out.print("("+i[0]+","+i[1]+")"+" , ");
 				}
 				System.out.println();
-			} else if("exit".equals(input)){
+			} else if("exit".equals(input)){	//close the program
 				break;
 			}
 		}
@@ -51,6 +51,8 @@ public class RiffGen extends Modifiers {
  * chord progressions	(fixat i Tab, resten borde vara att fixa magi i Generator)
  * 
  * solo
+ * 
+ * different note durations?
  * 
  * använda try, catch för ny tab/chord row istället för en counter?		(fixat för chord row nu)
  *

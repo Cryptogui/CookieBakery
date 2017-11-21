@@ -46,8 +46,9 @@ public class Generator extends Modifiers{
 	}
 	//for creating riffs
 	private void createRiff(){
+		allNotes.clear();
 		int[] newNote;
-		for(int i=0; i<desiredNotes; i++){
+		for(int i=1; i<=desiredNotes; i++){
 			if(probability(10)){	//single note
 				if(probability(80)){
 					maxStringJump = 1;
@@ -64,19 +65,20 @@ public class Generator extends Modifiers{
 					int fmax = lastNote[1] + maxFretJump;
 					newNote = getNote(fmin,fmax,s);
 				}
+				allNotes.add(newNote);
 				tab.addNoteToTab(newNote);
 				lastNote = newNote;
 				currentNoteNumOnRow += 1;
 				checkRows();
 			} else{	//arpeggio
-				int[][] newArpeggio = arpeggio(i+1);	//"+1" since i starts with 0
+				int[][] newArpeggio = arpeggio(i);
 				for(int[] a: newArpeggio){
 					tab.addNoteToTab(a);
 					lastNote = a;
 					currentNoteNumOnRow += 1;
 					checkRows();
 				}
-				i+=newArpeggio.length;
+				i+=newArpeggio.length-1;	//-1 because the for loop already added +1
 			}
 		}
 	}
@@ -109,7 +111,7 @@ public class Generator extends Modifiers{
 			}
 		}
 		newNote = posNewNotes.get(rand.nextInt(posNewNotes.size()));	//get a random note from the list of possible new notes
-		allNotes.add(newNote);
+		newNote = smartNotePlacement(newNote);
 		return newNote;
 	}
 	//returns an array of notes, an arpeggio
@@ -146,6 +148,7 @@ public class Generator extends Modifiers{
 					}
 				}
 				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));	//takes a random note from the list of possible next notes
+				nextNote = smartNotePlacement(nextNote);	//checks if there is a better placement on the fretboard for the note, e.g. (4,7) -> (3,2)
 				arp.add(nextNote);	//adds the new note to the arpeggio
 				allNotes.add(nextNote);
 				lastNote = nextNote;	//to be able to determine the following note
@@ -182,6 +185,7 @@ public class Generator extends Modifiers{
 					}
 				}
 				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));
+				nextNote = smartNotePlacement(nextNote);
 				arp.add(nextNote);
 				allNotes.add(nextNote);
 				lastNote = nextNote;
@@ -220,6 +224,56 @@ public class Generator extends Modifiers{
 		} else {
 			return false;
 		}
+	}
+	//finds the most suitable positioning for the new note based on previous notes
+	public int[] smartNotePlacement(int[] note){
+		int[] newNote = note;
+		int stringMultiplier;
+		try{
+			if(note[1] >= allNotes.get(allNotes.size()-1)[1] && note[0] <= allNotes.get(allNotes.size()-1)[0] && note[0] != 0){	//higher fret, higher string
+				if(note[0] == 2){	//is it the g string?
+					stringMultiplier = 4;
+				} else{	//apparently not
+					stringMultiplier = 5;
+				}
+				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
+					newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
+				}
+			} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] <= allNotes.get(allNotes.size()-1)[0]){	//lower fret, higher string
+				if(note[0]+1 == 2){	//is it the g string?
+					stringMultiplier = 4;
+				} else{	//apparently not
+					stringMultiplier = 5;
+				}
+				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
+					newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
+				}
+			} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0] && note[0] != 5){	//lower fret, lower string
+				if(note[0]+1 == 2){	//is it the g string?
+					stringMultiplier = 4;
+				} else{	//apparently not
+					stringMultiplier = 5;
+				}
+				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
+					newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
+				}
+			} else if(note[1] >= allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0]){	//higher fret, lower string
+				if(note[0] == 2){	//is it the g string?
+					stringMultiplier = 4;
+				} else{	//apparently not
+					stringMultiplier = 5;
+				}
+				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
+					newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
+				}
+			}
+		} catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("error in smartNotePlacement");
+		}
+		if(newNote[1] > frets || newNote[0] > strings || newNote[1] < 0 || newNote[0] < 0){	//is the new note placement outside fret boundaries?
+			newNote = note;
+		}
+		return newNote;
 	}
 	int equalNoteCooldown = 0;	//used to prevent equalNotes() from entering loop once it returns true
 	//checks if there are too many identical successive notes, if so, returns true
