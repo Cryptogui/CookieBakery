@@ -167,7 +167,7 @@ public class Generator extends Modifiers{
 				posNewNotes.clear();
 				posNextNotes.clear();
 				for(int[] note: currentKeyNotes){
-					if(note[0]>=lastNote[0] && lastNote[1]+Math.abs(lastNote[0]-note[0])*5<=note[1]){
+					if(note[0]>=lastNote[0] && lastNote[1]+Math.abs(lastNote[0]-note[0])*5>=note[1]){
 						posNewNotes.add(note);
 					}
 				}
