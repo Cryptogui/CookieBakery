@@ -71,6 +71,9 @@ public class Tab {
 					System.out.println();	//print an empty line for visibility between chord rows
 					System.out.println(chords.get(i));	//print the string
 				}
+				break;
+		default:
+			break;
 		}
 	}
 	

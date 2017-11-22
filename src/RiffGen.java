@@ -12,10 +12,8 @@ public class RiffGen extends Modifiers {
 		key = Key.Am;
 		desiredChords = 8;
 		type = Type.Riff;
-		//type = Type.ChordProgression;
 		Generator gen = new Generator();
-		//gen.generate();
-		//gen.tab.print();
+		TabExporter export = new TabExporter();
 		
 		//user interface
 		while(true){
@@ -35,6 +33,30 @@ public class RiffGen extends Modifiers {
 					System.out.print("("+i[0]+","+i[1]+")"+" , ");
 				}
 				System.out.println();
+			} else if("save".equals(input)){	//save the current tab
+				while(true){
+					System.out.print("file name: \n");
+					String fileName = scan.nextLine();
+					if("cancel".equals(fileName)){	//cancel save operation
+						break;
+					}
+					System.out.print("file format: \n");
+					String format = scan.nextLine();
+					if("cancel".equals(format)){	//cancel save operation
+						break;
+					} else if("txt".equals(format)){	//cancel save operation
+						export.saveToText(gen.tab, fileName);
+						System.out.println("file exported");
+						break;
+					} else if("pdf".equals(format)){	//cancel save operation
+						break;
+					} else if("image".equals(format)){	//cancel save operation
+						break;
+					} else {
+						System.out.println("format not supported");
+						break;
+					}
+				}
 			} else if("exit".equals(input)){	//close the program
 				break;
 			}
