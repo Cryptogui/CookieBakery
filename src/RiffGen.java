@@ -6,7 +6,7 @@ public class RiffGen extends Modifiers {
 		Scanner scan = new Scanner(System.in);
 		strings = 6;
 		frets = 12;
-		desiredNotes = 15;
+		desiredNotes = 14;
 		maxFretJump =3;
 		maxDefStringJump = 2;
 		key = Key.Am;
@@ -44,13 +44,15 @@ public class RiffGen extends Modifiers {
 					String format = scan.nextLine();
 					if("cancel".equals(format)){	//cancel save operation
 						break;
-					} else if("txt".equals(format)){	//cancel save operation
+					} else if("txt".equals(format)){	//save as .txt file
 						export.saveToText(gen.tab, fileName);
 						System.out.println("file exported");
 						break;
-					} else if("pdf".equals(format)){	//cancel save operation
+					} else if("pdf".equals(format)){	//save as pdf file (not done yet)
 						break;
-					} else if("image".equals(format)){	//cancel save operation
+					} else if("image".equals(format)){	//save as png file
+						export.saveToImage(gen.tab, fileName);
+						System.out.println("file exported");
 						break;
 					} else {
 						System.out.println("format not supported");

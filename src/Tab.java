@@ -72,8 +72,6 @@ public class Tab {
 					System.out.println(chords.get(i));	//print the string
 				}
 				break;
-		default:
-			break;
 		}
 	}
 	
