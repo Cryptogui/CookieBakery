@@ -111,7 +111,7 @@ public class Generator extends Modifiers{
 			}
 		}
 		newNote = posNewNotes.get(rand.nextInt(posNewNotes.size()));	//get a random note from the list of possible new notes
-		newNote = smartNotePlacement(newNote);
+		newNote = smart_note_placement(newNote);
 		return newNote;
 	}
 	//returns an array of notes, an arpeggio
@@ -148,7 +148,7 @@ public class Generator extends Modifiers{
 					}
 				}
 				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));	//takes a random note from the list of possible next notes
-				nextNote = smartNotePlacement(nextNote);	//checks if there is a better placement on the fretboard for the note, e.g. (4,7) -> (3,2)
+				nextNote = smart_note_placement(nextNote);	//checks if there is a better placement on the fretboard for the note, e.g. (4,7) -> (3,2)
 				arp.add(nextNote);	//adds the new note to the arpeggio
 				allNotes.add(nextNote);
 				lastNote = nextNote;	//to be able to determine the following note
@@ -185,7 +185,7 @@ public class Generator extends Modifiers{
 					}
 				}
 				int[] nextNote = posNextNotes.get(rand.nextInt(posNextNotes.size()));
-				nextNote = smartNotePlacement(nextNote);
+				nextNote = smart_note_placement(nextNote);
 				arp.add(nextNote);
 				allNotes.add(nextNote);
 				lastNote = nextNote;
@@ -226,56 +226,58 @@ public class Generator extends Modifiers{
 		}
 	}
 	//finds the most suitable positioning for the new note based on previous notes
-	public int[] smartNotePlacement(int[] note){
+	public int[] smart_note_placement(int[] note){
 		int[] newNote = note;
-		int stringMultiplier;
-		try{
-			if(note[1] >= allNotes.get(allNotes.size()-1)[1] && note[0] <= allNotes.get(allNotes.size()-1)[0] && note[0] != 0){	//higher fret, higher string
-				if(note[0] == 2){	//is it the g string?
-					stringMultiplier = 4;
-				} else{	//apparently not
-					stringMultiplier = 5;
+		if(smartNotePlacement){
+			int stringMultiplier;
+			try{
+				if(note[1] >= allNotes.get(allNotes.size()-1)[1] && note[0] <= allNotes.get(allNotes.size()-1)[0] && note[0] != 0){	//higher fret, higher string
+					if(note[0] == 2){	//is it the g string?
+						stringMultiplier = 4;
+					} else{	//apparently not
+						stringMultiplier = 5;
+					}
+					if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-3)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-3)[1])){
+						newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
+						System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
+					}
+				} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] <= allNotes.get(allNotes.size()-1)[0]){	//lower fret, higher string
+					if(note[0]+1 == 2){	//is it the g string?
+						stringMultiplier = 4;
+					} else{	//apparently not
+						stringMultiplier = 5;
+					}
+					if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-3)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-3)[1])){
+						newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
+						System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
+					}
+				} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0] && note[0] != 5){	//lower fret, lower string
+					if(note[0]+1 == 2){	//is it the g string?
+						stringMultiplier = 4;
+					} else{	//apparently not
+						stringMultiplier = 5;
+					}
+					if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-3)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-3)[1])){
+						newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
+						System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
+					}
+				} else if(note[1] >= allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0]){	//higher fret, lower string
+					if(note[0] == 2){	//is it the g string?
+						stringMultiplier = 4;
+					} else{	//apparently not
+						stringMultiplier = 5;
+					}
+					if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-3)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-3)[1])){
+						newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
+						System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
+					}
 				}
-				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
-					newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
-					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
-				}
-			} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] <= allNotes.get(allNotes.size()-1)[0]){	//lower fret, higher string
-				if(note[0]+1 == 2){	//is it the g string?
-					stringMultiplier = 4;
-				} else{	//apparently not
-					stringMultiplier = 5;
-				}
-				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
-					newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
-					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
-				}
-			} else if(note[1] < allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0] && note[0] != 5){	//lower fret, lower string
-				if(note[0]+1 == 2){	//is it the g string?
-					stringMultiplier = 4;
-				} else{	//apparently not
-					stringMultiplier = 5;
-				}
-				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]+stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
-					newNote = new int[]{note[0]+1, note[1]+stringMultiplier};
-					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
-				}
-			} else if(note[1] >= allNotes.get(allNotes.size()-1)[1] && note[0] > allNotes.get(allNotes.size()-1)[0]){	//higher fret, lower string
-				if(note[0] == 2){	//is it the g string?
-					stringMultiplier = 4;
-				} else{	//apparently not
-					stringMultiplier = 5;
-				}
-				if(Math.abs(note[1]-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-allNotes.get(allNotes.size()-2)[1]) >= Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-1)[1]) + Math.abs(note[1]-stringMultiplier-allNotes.get(allNotes.size()-2)[1])){
-					newNote = new int[]{note[0]-1, note[1]-stringMultiplier};
-					System.out.println("("+note[0]+","+note[1]+")"+" -> "+"("+newNote[0]+","+newNote[1]+")");
-				}
+			} catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("error in smart_note_placement");
 			}
-		} catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("error in smartNotePlacement");
-		}
-		if(newNote[1] > frets || newNote[0] > strings || newNote[1] < 0 || newNote[0] < 0){	//is the new note placement outside fret boundaries?
-			newNote = note;
+			if(newNote[1] > frets || newNote[0] > strings || newNote[1] < 0 || newNote[0] < 0){	//is the new note placement outside fret boundaries?
+				newNote = note;
+			}
 		}
 		return newNote;
 	}
@@ -303,24 +305,101 @@ public class Generator extends Modifiers{
 	}
 	//checks which key is the current one and adds its notes to the currentKeyNotes array
 	private void handleKeyNotes(){
+		boolean normalKey = false;
 		if(key == Key.Am || key == Key.C){
-			currentKeyNotes = AmNotes;
+			standardKeyNotes = AmNotes;
 			chordKey = "C";
+			normalKey = true;
 		} else if(key == Key.Em || key == Key.G){
-			currentKeyNotes = EmNotes;
+			standardKeyNotes = EmNotes;
 			chordKey = "G";
+			normalKey = true;
 		} else if(key == Key.Bm || key == Key.D){
-			currentKeyNotes = BmNotes;
+			standardKeyNotes = BmNotes;
 			chordKey = "D";
+			normalKey = true;
 		} else if(key == Key.Dm || key == Key.F){
-			currentKeyNotes = DmNotes;
+			standardKeyNotes = DmNotes;
 			chordKey = "F";
+			normalKey = true;
 		} else if(key == Key.Bbm || key == Key.Db){
-			currentKeyNotes = BbmNotes;
+			standardKeyNotes = BbmNotes;
 			chordKey = "Db";
+			normalKey = true;
 		} else if(key == Key.Cm || key == Key.Eb){
-			currentKeyNotes = CmNotes;
+			standardKeyNotes = CmNotes;
 			chordKey = "Eb";
+			normalKey = true;
+		} else if(key == Key.Fm || key == Key.Ab){
+			standardKeyNotes = FmNotes;
+			chordKey = "Ab";
+			normalKey = true;
+		}
+		if(normalKey){	//is it a normal key?
+			for(int i=0; i<standardKeyNotes.length; i++){
+				currentKeyNotes.add(standardKeyNotes[i]);	//use the notes corresponding to that key
+			}
+		} else{	//it is a custom scale
+			if(A){	//will the custom scale contain A?
+				for(int i=0; i<ARoots.length; i++){
+					currentKeyNotes.add(ARoots[i]);	//add all A roots to the custom scale
+				}
+			}
+			if(Bb){
+				for(int i=0; i<BbRoots.length; i++){
+					currentKeyNotes.add(BbRoots[i]);
+				}
+			}
+			if(B){
+				for(int i=0; i<BRoots.length; i++){
+					currentKeyNotes.add(BRoots[i]);
+				}
+			}
+			if(C){
+				for(int i=0; i<CRoots.length; i++){
+					currentKeyNotes.add(CRoots[i]);
+				}
+			}
+			if(Db){
+				for(int i=0; i<DbRoots.length; i++){
+					currentKeyNotes.add(DbRoots[i]);
+				}
+			}
+			if(D){
+				for(int i=0; i<DRoots.length; i++){
+					currentKeyNotes.add(DRoots[i]);
+				}
+			}
+			if(Eb){
+				for(int i=0; i<EbRoots.length; i++){
+					currentKeyNotes.add(EbRoots[i]);
+				}
+			}
+			if(E){
+				for(int i=0; i<ERoots.length; i++){
+					currentKeyNotes.add(ERoots[i]);
+				}
+			}
+			if(F){
+				for(int i=0; i<FRoots.length; i++){
+					currentKeyNotes.add(FRoots[i]);
+				}
+			}
+			if(Gb){
+				for(int i=0; i<GbRoots.length; i++){
+					currentKeyNotes.add(GbRoots[i]);
+				}
+			}
+			if(G){
+				for(int i=0; i<GRoots.length; i++){
+					currentKeyNotes.add(GRoots[i]);
+				}
+			}
+			if(Ab){
+				for(int i=0; i<AbRoots.length; i++){
+					currentKeyNotes.add(AbRoots[i]);
+				}
+			}
 		}
 	}
 	//determines the root notes to be used in the chord progression

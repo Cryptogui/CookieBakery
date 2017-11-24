@@ -46,23 +46,6 @@ public class TabExporter {
 	
 	//saves the tab as an image file	(credit to MadProgrammer https://stackoverflow.com/questions/18800717/convert-text-content-to-image)
 	public void saveToImage(Tab tab, String fileName){
-		String text = new String();
-		switch(tab.type){
-		case Riff:
-			for(int i=0; i<tab.tab.size(); i++){
-				text += "\n";	//empty line between tab rows
-				for(StringBuilder str: tab.tab.get(i)){
-					text += str+"\n";
-				}
-			}
-			break;
-		case ChordProgression:
-			for(int i=0; i<tab.chords.size(); i++){
-				text += "\n";	//empty line between chord rows
-				text += tab.chords.get(i)+"\n";
-			}
-			break;
-		}
 		
 		BufferedImage img = new BufferedImage(1,1,BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = img.createGraphics();

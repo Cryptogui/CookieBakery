@@ -12,6 +12,7 @@ public class RiffGen extends Modifiers {
 		key = Key.Am;
 		desiredChords = 8;
 		type = Type.Riff;
+		smartNotePlacement = true;
 		Generator gen = new Generator();
 		TabExporter export = new TabExporter();
 		
@@ -56,6 +57,74 @@ public class RiffGen extends Modifiers {
 						break;
 					} else {
 						System.out.println("format not supported");
+						break;
+					}
+				}
+			} else if("smart note placement off".equals(input)){	//don't use smart_note_placement for generation
+				smartNotePlacement = false;
+			} else if("smart note placement on".equals(input)){	//use smart_note_placement for generation
+				smartNotePlacement = true;
+			} else if("custom scale add".equals(input)){	//add note to custom scale
+				while(true){
+					System.out.print("add note to scale: \n");
+					String note = scan.nextLine();
+					if("A".equals(note)){
+						A = true;
+					} else if("Bb".equals(note)){
+						Bb = true;
+					} else if("B".equals(note)){
+						B = true;
+					} else if("C".equals(note)){
+						C = true;
+					} else if("Db".equals(note)){
+						Db = true;
+					} else if("D".equals(note)){
+						D = true;
+					} else if("Eb".equals(note)){
+						Eb = true;
+					} else if("E".equals(note)){
+						E = true;
+					} else if("F".equals(note)){
+						F = true;
+					} else if("Gb".equals(note)){
+						Gb = true;
+					} else if("G".equals(note)){
+						G = true;
+					} else if("Ab".equals(note)){
+						Ab = true;
+					} else if("cancel".equals(note)){
+						break;
+					}
+				}
+			} else if("custom scale remove".equals(input)){	//remove note from custom scale
+				while(true){
+					System.out.print("remove note from scale: \n");
+					String note = scan.nextLine();
+					if("A".equals(note)){
+						A = false;
+					} else if("Bb".equals(note)){
+						Bb = false;
+					} else if("B".equals(note)){
+						B = false;
+					} else if("C".equals(note)){
+						C = false;
+					} else if("Db".equals(note)){
+						Db = false;
+					} else if("D".equals(note)){
+						D = false;
+					} else if("Eb".equals(note)){
+						Eb = false;
+					} else if("E".equals(note)){
+						E = false;
+					} else if("F".equals(note)){
+						F = false;
+					} else if("Gb".equals(note)){
+						Gb = false;
+					} else if("G".equals(note)){
+						G = false;
+					} else if("Ab".equals(note)){
+						Ab = false;
+					} else if("cancel".equals(note)){
 						break;
 					}
 				}
