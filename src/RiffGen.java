@@ -1,7 +1,15 @@
 import java.util.Scanner;
 
+/**
+ * @author Max
+ * @version 24.11.2017
+ *
+ */
 public class RiffGen extends Modifiers {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[]args){
 		Scanner scan = new Scanner(System.in);
 		strings = 6;
@@ -136,19 +144,19 @@ public class RiffGen extends Modifiers {
 	}
 
 }
-/*to do:
+/*To do:
  *
- * tab writer
+ *TODO: tab writer
  *
- * save/export, probably i Tab class
+ *TODO: save/export, probably i Tab class
  * 
- * chord progressions	(fixat i Tab, resten borde vara att fixa magi i Generator)
+ *TODO: chord progressions	(fixat i Tab, resten borde vara att fixa magi i Generator)
  * 
- * solo
+ *TODO: solo
  * 
- * different note durations?
+ *TODO: different note durations?
  * 
- * använda try, catch för ny tab/chord row istället för en counter?		(fixat för chord row nu)
+ *TODO: anvï¿½nda try, catch fï¿½r ny tab/chord row istï¿½llet fï¿½r en counter?		(fixat fï¿½r chord row nu)
  *
- *nytt random object för varje gång istället för samma rand?
+ *TODO: nytt random object fï¿½r varje gï¿½ng istï¿½llet fï¿½r samma rand?
  */

@@ -1,9 +1,17 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-//this is where the music is created
+/**
+ * This is where the music is created
+ * @author Max
+ * @version 24.11.2017
+ *
+ */
 public class Generator extends Modifiers{
 
+	/**
+	 * 
+	 */
 	public Generator(){
 		tab = new Tab(strings, type);
 		notes = new int[strings][frets+1];
@@ -13,7 +21,10 @@ public class Generator extends Modifiers{
 			}
 		}
 	}
-	//used for generating music of selected type
+	
+	/**
+	 * Used for generating music of selected type
+	 */
 	public void generate(){
 		switch(type){
 			case ChordProgression:
@@ -25,9 +36,14 @@ public class Generator extends Modifiers{
 			case Solo:
 				createSolo();
 				break;
+        default:
+            break;
 		}
 	}
-	//for creating chord progressions
+
+	/**
+	 * For creating chord progressions
+	 */
 	private void createChords(){
 		handleKeyNotes();
 		handleKeyChords();
@@ -44,7 +60,10 @@ public class Generator extends Modifiers{
 			tab.addChord(newChord);
 		}
 	}
-	//for creating riffs
+
+	/**
+	 * For creating riffs
+	 */
 	private void createRiff(){
 		allNotes.clear();
 		int[] newNote;
@@ -82,20 +101,30 @@ public class Generator extends Modifiers{
 			}
 		}
 	}
-	//for creating melodies over a chord progression
+	
+	/**
+	 * For creating melodies over a chord progression
+	 */
 	private void createSolo(){
 
 	}
 
-	//check if number of notes in tab exceeds maximum capacity of a tab row, if so, create a new row
+	//
 	int currentNoteNumOnRow = 0;
+	/**
+	 * Check if number of notes in tab exceeds maximum capacity of a tab row, if so, create a new row
+	 */
 	public void checkRows(){
 		if(currentNoteNumOnRow >= 15){	//maximum note capability on row is 15
 			tab.createTabRow();
 			currentNoteNumOnRow = 0;	//reset for the next row
 		}
 	}
-	//returns a note that fits the current specifications (key, max fret distance from last note)
+
+	/**
+	 * Returns a note that fits the current specifications (key, max fret distance from last note)
+	 * @return
+	 */
 	private int[] smartNote(){
 		int[] newNote;
 		handleKeyNotes();
@@ -114,7 +143,12 @@ public class Generator extends Modifiers{
 		newNote = smart_note_placement(newNote);
 		return newNote;
 	}
-	//returns an array of notes, an arpeggio
+	
+	/**
+	 * Returns an array of notes, an arpeggio
+	 * @param currentNoteNum
+	 * @return
+	 */
 	private int[][] arpeggio(int currentNoteNum){
 		handleKeyNotes();
 		int[][] arpeggio;	//this is the array that is returned
@@ -217,15 +251,24 @@ public class Generator extends Modifiers{
 		}
 		return arpeggio;
 	}
-	//returns true with prob % chance
+
+	/**
+	 * Returns true with prob % chance
+	 * @param prob
+	 * @return
+	 */
 	private boolean probability(int prob){	//prob should be between 1 and 100
 		if(rand.nextInt(100)+1<=prob){
 			return true;
-		} else {
-			return false;
 		}
+        return false;
 	}
-	//finds the most suitable positioning for the new note based on previous notes
+
+	/**
+	 * Finds the most suitable positioning for the new note based on previous notes
+	 * @param note
+	 * @return
+	 */
 	public int[] smart_note_placement(int[] note){
 		int[] newNote = note;
 		if(smartNotePlacement){
@@ -281,29 +324,36 @@ public class Generator extends Modifiers{
 		}
 		return newNote;
 	}
+	
 	int equalNoteCooldown = 0;	//used to prevent equalNotes() from entering loop once it returns true
-	//checks if there are too many identical successive notes, if so, returns true
+	/**
+	 * Checks if there are too many identical successive notes, if so, returns true
+	 * @param checkValue
+	 * @return
+	 */
 	public boolean equalNotes(int checkValue){
 		int i=0;
 		if(equalNoteCooldown>0){
 			equalNoteCooldown--;
 			return false;
-		} else {
-			while(i<=checkValue){
-				try{
-					if(allNotes.get(allNotes.size()-1)[0] != allNotes.get(allNotes.size()-1-i)[0] && allNotes.get(allNotes.size()-1)[1] != allNotes.get(allNotes.size()-1-i)[1]){
-						return false;	//the notes are not identical
-					}
-				} catch(IndexOutOfBoundsException e){
-					return false;	//not enough notes to determine if there are too many successive identical notes
-				}
-				i++;
-			}
-			equalNoteCooldown = 4;
-			return true;	//the notes are identical
 		}
+        while(i<=checkValue){
+        	try{
+        		if(allNotes.get(allNotes.size()-1)[0] != allNotes.get(allNotes.size()-1-i)[0] && allNotes.get(allNotes.size()-1)[1] != allNotes.get(allNotes.size()-1-i)[1]){
+        			return false;	//the notes are not identical
+        		}
+        	} catch(IndexOutOfBoundsException e){
+        		return false;	//not enough notes to determine if there are too many successive identical notes
+        	}
+        	i++;
+        }
+        equalNoteCooldown = 4;
+        return true;	//the notes are identical
 	}
-	//checks which key is the current one and adds its notes to the currentKeyNotes array
+
+	/**
+	 * Checks which key is the current one and adds its notes to the currentKeyNotes array
+	 */
 	private void handleKeyNotes(){
 		boolean normalKey = false;
 		if(key == Key.Am || key == Key.C){
@@ -402,7 +452,10 @@ public class Generator extends Modifiers{
 			}
 		}
 	}
-	//determines the root notes to be used in the chord progression
+
+	/**
+	 * Determines the root notes to be used in the chord progression
+	 */
 	public void handleKeyChords(){
 		int[] steps = {2,2,1,2,2,2};	//major scale
 		int stepCounter = 0;
@@ -429,7 +482,10 @@ public class Generator extends Modifiers{
 	}
 
 	int min, max, string;
-	//random note, no specification
+	/**
+	 * Random note, no specification
+	 * @return
+	 */
 	public int[] getNote(){
 		string = rand.nextInt(notes.length);
 		min = 0;
@@ -438,7 +494,13 @@ public class Generator extends Modifiers{
 		int[] note = {string,fret};
 		return note;
 	}
-	//random note between fret minimum and maximum, random string
+
+	/**
+	 * Random note between fret minimum and maximum, random string
+	 * @param minimum
+	 * @param maximum
+	 * @return
+	 */
 	public int[] getNote(int minimum, int maximum){
 		string = rand.nextInt(notes.length);
 		if(minimum<0){
@@ -459,7 +521,14 @@ public class Generator extends Modifiers{
 		int[] note = {string,fret};
 		return note;
 	}
-	//random note between fret minimum and maximum on the selected string
+
+	/**
+	 * Random note between fret minimum and maximum on the selected string
+	 * @param minimum
+	 * @param maximum
+	 * @param selectedString
+	 * @return
+	 */
 	public int[] getNote(int minimum, int maximum, int selectedString){
 		if(0<=selectedString && selectedString<= this.notes.length){
 			string = selectedString;

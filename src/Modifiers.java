@@ -3,7 +3,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
-//for stuff to not get in the way
+/**
+ * For stuff to not get in the way
+ * @author Max
+ * @version 24.11.2017
+ *
+ */
 abstract class Modifiers {
 	
 	public enum Type{
