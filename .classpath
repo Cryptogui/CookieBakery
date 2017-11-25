@@ -2,5 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Camilo/Documents/GitHub/CookieBakery/lib/fontbox-2.0.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camilo/Documents/GitHub/CookieBakery/lib/pdfbox-2.0.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camilo/Documents/GitHub/CookieBakery/lib/pdfbox-tools-2.0.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camilo/Documents/GitHub/CookieBakery/lib/preflight-2.0.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camilo/Documents/GitHub/CookieBakery/lib/xmpbox-2.0.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camilo/Documents/GitHub/CookieBakery/lib/commons-logging-1.2/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camilo/Documents/GitHub/CookieBakery/lib/commons-logging-1.2/commons-logging-1.2-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

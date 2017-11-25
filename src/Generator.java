@@ -35,8 +35,10 @@ public class Generator extends Modifiers{
 		for(int i=0; i<desiredChords; i++){
 			newType = "";
 			newRoot = rootNotes.get(rand.nextInt(rootNotes.size()));
-			if(minOrMaj.get(newRoot) == "major"){
-				newType = chordTypesBasicMajor[rand.nextInt(chordTypesBasicMajor.length)];
+			if(minOrMaj.get(newRoot) == "major1"){
+				newType = chordTypesBasicMajor1[rand.nextInt(chordTypesBasicMajor1.length)];
+			} else if(minOrMaj.get(newRoot) == "major2"){
+				newType = chordTypesBasicMajor2[rand.nextInt(chordTypesBasicMajor2.length)];
 			} else if(minOrMaj.get(newRoot) == "minor" || minOrMaj.get(newRoot) == "diminished"){
 				newType = chordTypesBasicMinor[rand.nextInt(chordTypesBasicMinor.length)];
 			}
@@ -409,7 +411,7 @@ public class Generator extends Modifiers{
 		int root;
 		int tonic = tonics.indexOf(chordKey);
 		rootNotes.add(tonics.get(tonic));	//do (I)
-		minOrMaj.put(tonics.get(tonic),"major");	//defines this root as major, so it will be used to select major type chords
+		minOrMaj.put(tonics.get(tonic),"major1");	//defines this root as major, so it will be used to select major type chords
 		for(int nextStep: steps){	//re(II), mi(III), fa(IV), sol(V), la(VI), ti(VII)
 			if(tonic+stepCounter+nextStep>=tonics.size()){
 				root = tonic+stepCounter+nextStep-12;
@@ -420,8 +422,10 @@ public class Generator extends Modifiers{
 			stepCounter += nextStep;
 			if(stepCounter == 2 || stepCounter == 4 || stepCounter == 9){	//minor
 				minOrMaj.put(tonics.get(root),"minor");	//defines this root as minor, so it will be used to select minor type chords
-			} else if(stepCounter == 5 || stepCounter == 7){	//major
-				minOrMaj.put(tonics.get(root),"major");	//defines this root as major, so it will be used to select major type chords
+			} else if(stepCounter == 5){	//fa (IV) major
+				minOrMaj.put(tonics.get(root),"major1");	//defines this root as major, so it will be used to select major type chords, the 1 is for use of maj7 chord
+			} else if(stepCounter == 7){	//sol (V) major
+				minOrMaj.put(tonics.get(root),"major2");	//defines this root as major, so it will be used to select major type chords, the 2 is for use of 7 chord
 			} else {	//diminished
 				minOrMaj.put(tonics.get(root),"diminished");
 			}
