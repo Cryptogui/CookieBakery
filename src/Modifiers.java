@@ -71,10 +71,14 @@ abstract class Modifiers {
 	//different chord types
 	String[] chordTypesFullMajor = {"","7","maj7","dim","dim7","aug","5","sus4","sus2","7sus4","7sus2","add2","add4","add9","6","6/9","9","maj9","11","maj11","13","maj13","7#9","7b9","7#5","7b5"};
 	String[] chordTypesFullMinor = {"m","m7","m7b5","m/aug","5","m/maj7","sus4","sus2","7sus4","7sus2","m/add2","m/add4","m6","m9","m/maj9","m11","m/maj11","m13","m/maj13","m7#9","m7b9","m7#5"};
-	String[] chordTypesSimpleMajor = {"","7","maj7","5","sus4","sus2"};
-	String[] chordTypesSimpleMinor = {"m","m7","5","sus4","sus2"};
-	String[] chordTypesBasicMajor = {"","7","maj7","5"};
-	String[] chordTypesBasicMinor = {"m","m7","5"};
+	String[] chordTypesExpandedMajor = {"","7","maj7","5","sus4","sus2"};
+	String[] chordTypesExpandedMinor = {"m","m7","5","sus4","sus2"};
+	String[] chordTypesBasicMajor1 = {"","maj7"};
+	String[] chordTypesBasicMajor2 = {"","7"};
+	String[] chordTypesBasicMinor = {"m","m7"};
+	String[] chordTypesSimpleMajor = {""};
+	String[] chordTypesSimpleMinor = {"m"};
+	String[] chordTypesPower = {"5"};
 	ArrayList <String> tonics = new ArrayList <String>(Arrays.asList("A","A#","B","C","C#","D","D#","E","F","F#","G","G#"));	//the root of the chord, pick one from these and type from the above
 	String chordKey;
 	ArrayList <String> rootNotes = new ArrayList<>();	//the possible root notes for the chords in the progression, i.e. do, re, mi...

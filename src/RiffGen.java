@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -54,13 +55,23 @@ public class RiffGen extends Modifiers {
 					if("cancel".equals(format)){	//cancel save operation
 						break;
 					} else if("txt".equals(format)){	//save as .txt file
-						export.saveToText(gen.tab, fileName);
+						export.save_to_text(gen.tab, fileName);
 						System.out.println("file exported");
 						break;
 					} else if("pdf".equals(format)){	//save as pdf file (not done yet)
+						try {
+							export.save_to_pdf(gen.tab, fileName);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						System.out.println("file exported");
 						break;
 					} else if("image".equals(format)){	//save as png file
-						export.saveToImage(gen.tab, fileName);
+						try {
+							export.save_to_image(gen.tab, fileName);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						System.out.println("file exported");
 						break;
 					} else {
