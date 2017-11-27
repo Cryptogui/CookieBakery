@@ -3,6 +3,11 @@
 
 import java.util.ArrayList;
 
+/**
+ * @author Max
+ * @version 24.11.2017
+ *
+ */
 public class Tab {
 	ArrayList<ArrayList<StringBuilder>> tab;	//contains all notes in the tab, tab[element representing a tab row][element representing string in the row]
 	ArrayList<StringBuilder> chords;	//like tab, but for chords, chords[tab row][element representing string in the row]
@@ -12,6 +17,10 @@ public class Tab {
 	int strings;
 	Modifiers.Type type;
 	
+	/**
+	 * @param stringNum
+	 * @param t
+	 */
 	public Tab(int stringNum, Modifiers.Type t){
 		type = t;
 		strings = stringNum;
@@ -27,10 +36,15 @@ public class Tab {
 			case Solo:
 				
 				break;
+        default:
+            break;
 		}
 	}
 	
-	//adds a note to the tab
+	/**
+	 * Adds a note to the tab
+	 * @param note
+	 */
 	public void addNoteToTab(int[] note){
 		if(note[1]>=10){
 			tab.get(currentRow-1).get(note[0]).deleteCharAt(currentPosition);	//deletes the char at the specified index
@@ -42,7 +56,10 @@ public class Tab {
 		currentPosition+=4;	//moves the "marker" to the next position for the following note
 	}
 	
-	//adds a chord to the progression
+	/**
+	 * Adds a chord to the progression
+	 * @param chord
+	 */
 	public void addChord(String chord){
 		for(int i=0; i<chord.length(); i++){
 			try{	//this try/catch block handles the event that there is no space left for new chords on the chord row, in which case a new chord row is created
@@ -55,7 +72,9 @@ public class Tab {
 		currentChordPosition+=16;	//moves the "marker" to the next position for the following chord
 	}
 	
-	//print tab to console
+	/**
+	 * Print tab to console
+	 */
 	public void print(){
 		switch(type){
 			case Riff:
@@ -72,10 +91,14 @@ public class Tab {
 					System.out.println(chords.get(i));	//print the string
 				}
 				break;
+        default:
+            break;
 		}
 	}
 	
-	//creates a new tab row, i.e. 6 empty lines like this: |-----|	where the total length of the string is 64
+	/**
+	 * Creates a new tab row, i.e. 6 empty lines like this: |-----|    where the total length of the string is 64
+	 */
 	public void createTabRow(){
 		tab.add(new ArrayList<StringBuilder>());	//creates a new tab row
 		for(int i=0; i<strings; i++){	//for each string on the fretboard
@@ -92,7 +115,9 @@ public class Tab {
 		currentPosition = 3;
 	}
 	
-	//creates a new chord row, that will eventually look like this: | A   B   Cm  D |
+	/**
+	 * Creates a new chord row, that will eventually look like this: | A   B   Cm  D |
+	 */
 	public void createChordRow(){
 		chords.add(new StringBuilder());	//creates a new chord row
 		for(int i=0; i<64; i++){

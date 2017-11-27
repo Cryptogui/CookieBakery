@@ -13,6 +13,7 @@ import java.io.PrintStream;
 
 import javax.imageio.ImageIO;
 
+//
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -21,13 +22,27 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
-//used for exporting tabs
+/**
+ * Used for exporting tabs
+ * @author C
+ * @version 24.11.2017
+ *
+ */
 public class TabExporter {
+    
+	/**
+	 * 
+	 */
 	public TabExporter(){
 		
 	}
 	
-	//saves the tab as a text file	(credit to Jeremy Smyth https://stackoverflow.com/questions/1053467/how-do-i-save-a-string-to-a-text-file-using-java)
+
+	/**
+	 * Saves the tab as a text file    (credit to Jeremy Smyth https://stackoverflow.com/questions/1053467/how-do-i-save-a-string-to-a-text-file-using-java)
+	 * @param tab
+	 * @param fileName
+	 */
 	public void save_to_text(Tab tab, String fileName){
 		try (PrintStream out = new PrintStream(new FileOutputStream("tabs/"+fileName+".txt"))) {
 			switch(tab.type){
@@ -53,8 +68,12 @@ public class TabExporter {
 		}
 	}
 	
-	//saves the tab as an image file	(credit to MadProgrammer https://stackoverflow.com/questions/18800717/convert-text-content-to-image)
-	public void save_to_image(Tab tab, String fileName) throws IOException{
+	/**
+	 * Saves the tab as an image file  (credit to MadProgrammer https://stackoverflow.com/questions/18800717/convert-text-content-to-image)
+	 * @param tab
+	 * @param fileName
+	 */
+   public void save_to_image(Tab tab, String fileName) throws IOException{
 		/*
 		BufferedImage img = new BufferedImage(1,1,BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = img.createGraphics();
@@ -82,6 +101,8 @@ public class TabExporter {
 				}
 			}
 			break;
+        default:
+            break;
 		}
 		g2d.dispose();
 		
@@ -119,6 +140,8 @@ public class TabExporter {
 				lineNum++;
 			}
 			break;
+        default:
+            break;
 		}
         g2d.dispose();
         
